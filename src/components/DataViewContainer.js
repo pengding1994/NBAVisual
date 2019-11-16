@@ -1,15 +1,17 @@
 import React from 'react';
 import { ShotChart } from './ShotChart';
-import { Slider, InputNumber, Row, Col } from 'antd';
+import { CountSlider } from './CountSlider';
+import _ from 'lodash';
 
 export class DataViewContainer extends React.Component {
     state = {
         minCount: 2,
     };
 
-    handleMinCountChange = (minCount) => {
+    handleMinCountChange = _.debounce((minCount) => {
+        console.log(`handleMinCountChange, ${minCount}`);
         this.setState({ minCount })
-    };
+    }, 500);
 
     render() {
         const { playerId } = this.props;
@@ -18,25 +20,7 @@ export class DataViewContainer extends React.Component {
             <div className="data-view">
                 <ShotChart playerId={playerId} minCount={minCount}/>
                 <div className="filters">
-                    <Row>
-                        <Col span={12}>
-                            <Slider
-                                min={1}
-                                max={20}
-                                onChange={this.handleMinCountChange}
-                                value={typeof minCount === 'number' ? minCount : 0}
-                            />
-                        </Col>
-                        <Col span={4}>
-                            <InputNumber
-                                min={1}
-                                max={20}
-                                style={{ marginLeft: 16 }}
-                                value={minCount}
-                                onChange={this.handleMinCountChange}
-                            />
-                        </Col>
-                    </Row>
+                    <CountSlider handleMinCountChange={this.handleMinCountChange} defaultValue={2}/>
                 </div>
             </div>
         );
