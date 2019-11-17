@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TopNavBar } from './TopNavBar';
 import { Main } from './Main';
 
-function App() {
-    return (
-        <div className="App">
-            <TopNavBar />
-            <Main />
-        </div>
-    );
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                <TopNavBar/>
+                <Main/>
+            </div>
+        );
+    }
 }
-
 export default App;

@@ -11,10 +11,12 @@ export class ShotChart extends React.Component {
     static propTypes = {
         playerId: PropTypes.number.isRequired,
         minCount: PropTypes.number.isRequired,
+        chartType: PropTypes.string.isRequired,
+        displayTooltip: PropTypes.bool.isRequired,
     }
 
     componentDidUpdate() {
-        const { playerId, minCount } = this.props;
+        const { playerId, minCount, chartType, displayTooltip } = this.props;
         nba.stats.shots({
             PlayerID: playerId
         }).then((response) => {
@@ -31,8 +33,8 @@ export class ShotChart extends React.Component {
             const chart_court = court().width(500);
             const chart_shots = shots()
                 .shotRenderThreshold(minCount)
-                .displayToolTips(true)
-                .displayType("hexbin");
+                .displayToolTips(displayTooltip)
+                .displayType(chartType);
             courtSelection.call(chart_court);
             courtSelection.datum(final_shots).call(chart_shots);
         });
